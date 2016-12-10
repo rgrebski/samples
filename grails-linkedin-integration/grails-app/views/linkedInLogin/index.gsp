@@ -1,6 +1,6 @@
 <html>
 <g:if test="${params.code != null}">
-    Auth code: ${params.code}
+    Logged user info: ${loggedUserInfo}
 </g:if>
 <g:else>
     "code" request param missing

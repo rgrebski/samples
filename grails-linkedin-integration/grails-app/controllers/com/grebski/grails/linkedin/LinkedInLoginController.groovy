@@ -7,12 +7,15 @@ class LinkedInLoginController {
     def index() {
         def linkedInAuthCode = params.code
 
+
         if(linkedInAuthCode != null){
             def token = linkedInLoginService.getTokenFromLinkedIn(linkedInAuthCode)
-        }else {
-            return [error: 'Missing code query param']
+            def userInfo = linkedInLoginService.getUserInfo(token.access_token)
+            chain(action: "showUserInfo", model: [userInfo: userInfo])
         }
-
     }
 
+    def showUserInfo(){
+        [userInfo: chainModel['userInfo']]
+    }
 }
