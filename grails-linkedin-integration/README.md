@@ -1,4 +1,4 @@
-# Grails - integration with LinkedIn
+# Grails - integration with LinkedIn (OAuth2)
 
 ## Configuration
 1) Application.groovy - change oauth credentials location
