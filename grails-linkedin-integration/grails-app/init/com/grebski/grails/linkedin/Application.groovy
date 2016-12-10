@@ -9,7 +9,7 @@ Credentials file should look like this:
 clientId=yourLinkedInOauthClientId
 clientSecret=yourLinkedInOauthSecret
  */
-@PropertySource("file:/home/rgrebski/linkedin-oauth-credentials.properties")
+@PropertySource("file:\${user.home}/linkedin-oauth-credentials.properties")
 class Application extends GrailsAutoConfiguration {
     static void main(String[] args) {
         GrailsApp.run(Application, args)
