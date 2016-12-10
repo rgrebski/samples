@@ -1,4 +1,4 @@
-package grails.linkedin.integration
+package com.grebski.grails.linkedin
 
 class BootStrap {
 

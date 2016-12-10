@@ -1,4 +1,4 @@
-package grails.linkedin.integration
+package com.grebski.grails.linkedin
 
 class UrlMappings {
 
@@ -9,7 +9,8 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(controller: "index", view: "/index", action: "index")
+        "/linkedInLogin" (view: "/linkedInLogin", controller: "linkedInLogin", action: "index")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }
