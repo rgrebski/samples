@@ -34,16 +34,11 @@
 
 </div> <!-- /container -->
 <div class="col-md-offset-5 col-md-2">
-
-    <form action="https://www.linkedin.com/uas/oauth2/authorization" method="post">
-        <input type="hidden" name="response_type" value="code"/>
-        <input type="hidden" name="redirect_uri" value="http://localhost:8080/linkedInLogin"/>
-        <input type="hidden" name="client_id" value="${clientId}"/>
-        <input type="hidden" name="state" value="assumeImRandom2:)"/>
-
-
-        <input type="submit" value="Login with LinkedIn" class="lnk"/>
-    </form>
+    <h2>
+        <a href="${linkedInLoginUrl}">
+            <img src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png" style="width: 100%"/>
+        </a>
+    </h2>
 </div>
 
 </body>

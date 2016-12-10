@@ -7,8 +7,6 @@ import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
 import groovy.json.JsonOutput
 import org.grails.web.json.JSONElement
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 
 import static javax.servlet.http.HttpServletResponse.SC_OK
 
@@ -49,18 +47,19 @@ class LinkedInLoginService {
 
     private RestResponse postGetAccessToken(String authCode) {
         RestBuilder rest = new RestBuilder()
-        MultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>()
-        form.add("grant_type", "authorization_code")
-        form.add("code", authCode)
-        form.add("redirect_uri", REDIRECT_URI)
-        form.add('client_id', linkedInConfig.clientId)
-        form.add('client_secret', linkedInConfig.clientSecret)
+        Map<String, String> queryParams = [:]
+        queryParams.put('client_id', linkedInConfig.clientId)
+        queryParams.put('client_secret', linkedInConfig.clientSecret)
+        queryParams.put("grant_type", "authorization_code")
+        queryParams.put("redirect_uri", REDIRECT_URI)
+        queryParams.put("code", authCode)
 
-        def resp = rest.post(GET_ACCESS_TOKEN_URL) {
+
+        def queryParamsString = queryParams.collect {"$it.key=$it.value"}.join("&")
+        def getAccessTokenUrl = "$GET_ACCESS_TOKEN_URL?$queryParamsString"
+        def resp = rest.get(getAccessTokenUrl) {
             auth(linkedInConfig.clientId, linkedInConfig.clientSecret)
             accept("application/json")
-            contentType("application/x-www-form-urlencoded")
-            body(form)
         }
         resp
     }
