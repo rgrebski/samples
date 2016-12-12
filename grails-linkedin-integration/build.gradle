@@ -7,6 +7,7 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.6"
         classpath "org.grails.plugins:hibernate5:6.0.4"
+        classpath('se.transmode.gradle:gradle-docker:1.2')
     }
 }
 
@@ -17,6 +18,8 @@ apply plugin:"idea"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"asset-pipeline"
+apply plugin: 'docker'
+
 
 repositories {
     mavenLocal()
@@ -32,8 +35,26 @@ dependencyManagement {
     applyMavenExclusions false
 }
 
+task buildDocker(type: Docker, dependsOn: build) {
+    push = false
+    applicationName = jar.baseName
+    tagVersion='latest'
+    tag="rgrebski/$project.name"
+    dockerfile = file('Dockerfile')
+    exposePort(8080)
+
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
+
 dependencies {
     compile "org.grails.plugins:rest-client-builder:2.1.1"
+    compile "com.google.guava:guava:20.0"
+
 
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
