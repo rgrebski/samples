@@ -12,8 +12,6 @@ import static javax.servlet.http.HttpServletResponse.SC_OK
 
 class LinkedInLoginService {
 
-    private static final String REDIRECT_URI = 'http://localhost:8080/linkedInLogin'
-
     private static final String GET_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken"
     private static final String GET_USER_INFO_URL = "https://api.linkedin.com/v1/people/~" +
             ":(id,first-name,last-name,headline,email-address,picture-url,industry,site-standard-profile-request,interests,summary,main-address,phone-numbers,skills:(skill))" +
@@ -51,7 +49,7 @@ class LinkedInLoginService {
         queryParams.put('client_id', linkedInConfig.clientId)
         queryParams.put('client_secret', linkedInConfig.clientSecret)
         queryParams.put("grant_type", "authorization_code")
-        queryParams.put("redirect_uri", REDIRECT_URI)
+        queryParams.put("redirect_uri", linkedInConfig.redirectUrl)
         queryParams.put("code", authCode)
 
 

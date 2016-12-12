@@ -2,15 +2,23 @@ package com.grebski.grails.linkedin
 
 import org.apache.commons.lang.RandomStringUtils
 
+import javax.annotation.PostConstruct
+
 class IndexController {
 
-    private static String linkedInLoginUrl = "https://www.linkedin.com/oauth/v2/authorization?response_type=code" +
-            "&client_id=77zhc7lm079p0z" +
-            "&redirect_uri=http%3A%2F%2Flocalhost:8080%2FlinkedInLogin" +
-            "&scope=r_basicprofile"
+    private String linkedInLoginUrl
 
 
     def linkedInConfig
+
+    @PostConstruct
+    public void init(){
+        def redirectUrlEscaped = linkedInConfig.redirectUrlEscaped
+        linkedInLoginUrl = "https://www.linkedin.com/oauth/v2/authorization?response_type=code" +
+                "&client_id=$linkedInConfig.clientId" +
+                "&redirect_uri=$redirectUrlEscaped" +
+                "&scope=r_basicprofile%20r_emailaddress"
+    }
 
     def index() {
         [
